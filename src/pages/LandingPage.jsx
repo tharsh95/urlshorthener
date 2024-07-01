@@ -21,7 +21,7 @@ const LandingPage = () => {
   return (
     <div className="flex flex-col items-center">
       <h2 className="my-10 sm:my-16 lg:text-7xl sm:text-6xl text-center font-extrabold text-3xl">
-        The ooly URL Shortener you&lsquo;ll ever need 👇
+        The only URL Shortener you&lsquo;ll ever need 👇
       </h2>
       <form
         onSubmit={handleShorten}

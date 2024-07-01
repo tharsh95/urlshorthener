@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -14,7 +15,8 @@ import { BeatLoader } from "react-spinners";
 import Error from "./Error";
 import useFetch from "@/hooks/useFetch";
 import { login } from "@/db/apiAuth";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { UrlState } from "@/context";
 
 const Login = () => {
   const [errors, setErrors] = useState({});
@@ -22,13 +24,18 @@ const Login = () => {
     email: "",
     password: "",
   });
-  const navigate = useNavigate()
-  const { data, error, loading, fn:fnlogin } = useFetch(login, formData);
-  useEffect(()=>{
-    if(error===null && data){
-navigate('/dashboard')
+  const { fetchUser } = UrlState();
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const link = searchParams.get("createNew");
+  const { data, error, loading, fn: fnlogin } = useFetch(login, formData);
+  useEffect(() => {
+    console.log(error,data,"fetch")
+    if (error === null && data) {
+      navigate(`/dashboard?${link ? `createNew=${link}` : ""}`);
+      fetchUser();
     }
-  },[data,error])
+  }, [data, error]);
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -45,7 +52,7 @@ navigate('/dashboard')
           .required("Password is required"),
       });
 
-      await schema.validate(formData, {abortEarly: false});
+      await schema.validate(formData, { abortEarly: false });
       await fnlogin();
     } catch (e) {
       const newErrors = {};
