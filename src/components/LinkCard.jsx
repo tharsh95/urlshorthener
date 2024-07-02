@@ -28,7 +28,7 @@ const LinkCard = ({ url, fetchUrl }) => {
     <div className="flex flex-col md:flex-row gap05 border p-4 bg-gray-900 rounded-lg">
       <img
         src={url.qr}
-        className="h-32 object-contain ring ring-blue-500 self-start"
+        className="h-32 object-contain ring ring-blue-500 self-start mr-6"
       />
       <Link to={`/link/${url?.id}`} className="flex flex-col flex-1">
         <span className="text-3xl font-extrabold hover:underline cursor-pointer">

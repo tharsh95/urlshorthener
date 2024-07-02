@@ -11,6 +11,7 @@ import { getUrls } from "@/db/apiUrlls";
 import { getClicks } from "@/db/apiClicks";
 import Error from "@/components/Error";
 import LinkCard from "@/components/LinkCard";
+import CreateLink from "@/components/CreateLink";
 
 const Dashboard = () => {
   const [search, setSearch] = useState("");
@@ -69,7 +70,9 @@ const Dashboard = () => {
       </div>
       <div className="flex justify-between">
         <h1>My Links</h1>
-        <Button>Create Link</Button>
+
+          <CreateLink />
+
       </div>
       <div className="relative">
         <Input
@@ -81,7 +84,9 @@ const Dashboard = () => {
         <Filter className="absolute top-2 right-2 p-1" />
       </div>
       {error && <Error message={error.message} />}
-      {(filteredData||[]).map((el)=> <LinkCard key={el.id} url={el} fetchUrl={fnUrls}/> )}
+      {(filteredData || []).map((el) => (
+        <LinkCard key={el.id} url={el} fetchUrl={fnUrls} />
+      ))}
     </div>
   );
 };
